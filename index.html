@@ -71,13 +71,17 @@
     }
 
     /* 頂部固定狀態標題 */
-    .app-header {
+    .top-bar {
       position: sticky;
       top: 0;
       z-index: 900;
       background: var(--c-white);
       border-bottom: var(--border-thick);
-      padding: 14px 20px;
+      padding-top: env(safe-area-inset-top);
+    }
+    .app-header {
+      background: var(--c-white);
+      padding: 12px 20px 8px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -101,10 +105,10 @@
       font-weight: 800;
     }
 
-    /* 頁面主體內容區 (底部留足 170px，徹底避開懸浮導航列與瀏覽器工具列) */
+    /* 頁面主體內容區 (導航列已移至頂部，底部僅保留安全區) */
     .main-content {
       flex: 1;
-      padding: 16px 16px calc(170px + env(safe-area-inset-bottom)) 16px;
+      padding: 16px 16px calc(32px + env(safe-area-inset-bottom)) 16px;
       overflow-y: auto;
     }
 
@@ -441,26 +445,21 @@
     }
 
     /* ============================================================
-       5. 底部固定導航欄 (改為「向上懸浮島」樣式，徹底杜絕瀏覽器遮擋)
+       5. 頂部分頁導航欄（固定於標題列下方）
        ============================================================ */
     .bottom-nav {
-      position: fixed;
-      /* 關鍵：不再死貼底部，往上抬升 18px 並自適應安全區 */
-      bottom: calc(18px + env(safe-area-inset-bottom));
-      left: 50%;
-      transform: translateX(-50%);
-      width: calc(100% - 28px);
-      max-width: 452px;
-      height: 64px;
+      position: relative;
+      margin: 0 14px 12px;
+      height: 60px;
       background: var(--c-white);
       border: var(--border-thick);
       border-radius: 20px;
-      box-shadow: 4px 5px 0px var(--border-color);
+      box-shadow: 3px 4px 0px var(--border-color);
       display: grid;
       grid-template-columns: repeat(5, 1fr);
       align-items: center;
       padding: 0 6px;
-      z-index: 9999; /* 保證最頂層 */
+      z-index: 1;
     }
 
     .nav-btn {
@@ -514,6 +513,8 @@
   <!-- 手機尺寸限制外殼 -->
   <div class="app-wrapper">
 
+    <!-- 頂部固定區：標題 + 分頁導航 -->
+    <div class="top-bar">
     <!-- 頂部標題列 -->
     <header class="app-header">
       <div class="brand-title">
@@ -525,6 +526,35 @@
         5 Days · 4 Nights
       </div>
     </header>
+
+    <!-- 頂部分頁導航列 -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" data-tab-target="home" id="nav-btn-home">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-house"></i></div>
+        <span class="nav-label">首頁</span>
+      </button>
+
+      <button class="nav-btn" data-tab-target="flight" id="nav-btn-flight">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-plane"></i></div>
+        <span class="nav-label">航班</span>
+      </button>
+
+      <button class="nav-btn" data-tab-target="itinerary" id="nav-btn-itinerary">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-calendar-days"></i></div>
+        <span class="nav-label">行程</span>
+      </button>
+
+      <button class="nav-btn" data-tab-target="hotel" id="nav-btn-hotel">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-hotel"></i></div>
+        <span class="nav-label">住宿</span>
+      </button>
+
+      <button class="nav-btn" data-tab-target="tips" id="nav-btn-tips">
+        <div class="nav-icon-wrap"><i class="fa-solid fa-circle-info"></i></div>
+        <span class="nav-label">須知</span>
+      </button>
+    </nav>
+    </div>
 
     <!-- 滾動內容區 -->
     <main class="main-content">
@@ -1243,33 +1273,6 @@
 
     </main>
 
-    <!-- 底部固定導航欄 (改為向上漂浮懸浮島，徹底不被任何按鈕或工具列遮擋) -->
-    <nav class="bottom-nav">
-      <button class="nav-btn active" data-tab-target="home" id="nav-btn-home">
-        <div class="nav-icon-wrap"><i class="fa-solid fa-house"></i></div>
-        <span class="nav-label">首頁</span>
-      </button>
-
-      <button class="nav-btn" data-tab-target="flight" id="nav-btn-flight">
-        <div class="nav-icon-wrap"><i class="fa-solid fa-plane"></i></div>
-        <span class="nav-label">航班</span>
-      </button>
-
-      <button class="nav-btn" data-tab-target="itinerary" id="nav-btn-itinerary">
-        <div class="nav-icon-wrap"><i class="fa-solid fa-calendar-days"></i></div>
-        <span class="nav-label">行程</span>
-      </button>
-
-      <button class="nav-btn" data-tab-target="hotel" id="nav-btn-hotel">
-        <div class="nav-icon-wrap"><i class="fa-solid fa-hotel"></i></div>
-        <span class="nav-label">住宿</span>
-      </button>
-
-      <button class="nav-btn" data-tab-target="tips" id="nav-btn-tips">
-        <div class="nav-icon-wrap"><i class="fa-solid fa-circle-info"></i></div>
-        <span class="nav-label">須知</span>
-      </button>
-    </nav>
 
   </div>
 
